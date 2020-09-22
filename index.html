@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -12,22 +13,22 @@
     <div class="container">
       <h4>Your Balance</h4>
       <h1 id="balance">$0.00</h1>
-    </div>
 
-    <div class="inc-exp-container">
-      <div>
-        <h4>Income</h4>
-        <p class="money plus" id="money-plus">+$0.00</p>
-      </div>
-      <div>
-        <h4>Expense</h4>
-        <p class="money minus" id="money-minus">-$0.00</p>
+      <div class="inc-exp-container">
+        <div>
+          <h4>Income</h4>
+          <p id="money-plus" class="money plus">+$0.00</p>
+        </div>
+        <div>
+          <h4>Expense</h4>
+          <p id="money-minus" class="money minus">-$0.00</p>
+        </div>
       </div>
 
       <h3>History</h3>
-      <ul class="list" id="list">
+      <ul id="list" class="list">
         <li class="minus">
-          Cash <span>-$400</span> <button class="delete-btn">x</button>
+          Cash <span>-$400</span><button class="delete-btn">x</button>
         </li>
       </ul>
 
@@ -47,6 +48,7 @@
         <button class="btn">Add transaction</button>
       </form>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
