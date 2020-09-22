@@ -27,9 +27,32 @@ function addTransactionDOM(transaction) {
   list.appendChild(item);
 }
 
+function updateValues() {
+  const total = transactions
+    .map((transaction) => transaction.amount)
+    .reduce((cur, acc) => (cur += acc), 0)
+    .toFixed(2);
+  const income = transactions
+    .map((transaction) => transaction.amount)
+    .filter((amount) => amount > 0)
+    .reduce((cur, acc) => (cur += acc), 0)
+    .toFixed(2);
+  const expense = (
+    transactions
+      .map((transaction) => transaction.amount)
+      .filter((amount) => amount < 0)
+      .reduce((cur, acc) => (cur += acc), 0) * -1
+  ).toFixed(2);
+
+  balance.innerHTML = `$${total}`;
+  moneyPlus.innerHTML = `$${income}`;
+  moneyMinus.innerHTML = `$${expense}`;
+}
+
 function init() {
   list.innerHTML = '';
   transactions.forEach(addTransactionDOM);
+  updateValues();
 }
 
 init();
