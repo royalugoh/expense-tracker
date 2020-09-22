@@ -13,7 +13,12 @@ const dummyTransactions = [
   { id: 4, text: 'Camera', amount: 150 },
 ];
 
-let transactions = dummyTransactions;
+const localStorageTransactions = JSON.parse(
+  localStorage.getItem('transactions')
+);
+
+let transactions =
+  localStorage.getItem('transactions') !== null ? localStorageTransactions : [];
 
 function addTransactionDOM(transaction) {
   const sign = transaction.amount < 0 ? '-' : '+';
@@ -30,18 +35,14 @@ function addTransactionDOM(transaction) {
 }
 
 function updateValues() {
-  const total = transactions
-    .map((transaction) => transaction.amount)
-    .reduce((cur, acc) => (cur += acc), 0)
-    .toFixed(2);
-  const income = transactions
-    .map((transaction) => transaction.amount)
+  const amount = transactions.map((transaction) => transaction.amount);
+  const total = amount.reduce((cur, acc) => (cur += acc), 0).toFixed(2);
+  const income = amount
     .filter((amount) => amount > 0)
     .reduce((cur, acc) => (cur += acc), 0)
     .toFixed(2);
   const expense = (
-    transactions
-      .map((transaction) => transaction.amount)
+    amount
       .filter((amount) => amount < 0)
       .reduce((cur, acc) => (cur += acc), 0) * -1
   ).toFixed(2);
@@ -66,6 +67,7 @@ function addTransaction(e) {
     transactions.push(transaction);
     addTransactionDOM(transaction);
     updateValues();
+    updateLocalStorage();
     text.value = '';
     amount.value = '';
   }
@@ -73,11 +75,18 @@ function addTransaction(e) {
 
 function removeTransaction(id) {
   transactions = transactions.filter((transaction) => transaction.id !== id);
+
+  updateLocalStorage();
+
   init();
 }
 
 function generateRandomId() {
   return Math.floor(Math.random() * 100000000);
+}
+
+function updateLocalStorage() {
+  localStorage.setItem('transactions', JSON.stringify(transactions));
 }
 
 function init() {
